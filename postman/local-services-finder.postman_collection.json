@@ -1,0 +1,1357 @@
+{
+	"info": {
+		"name": "Local Services Finder API",
+		"description": "Complete API collection for Local Services Finder platform with cookie-based authentication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "providerId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "categoryId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "listingId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "bookingId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "reviewId",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Signup as USER",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"userId\", jsonData.user.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"password123\",\n    \"role\": \"USER\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/signup",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "signup"]
+						}
+					}
+				},
+				{
+					"name": "Signup as PROVIDER",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"providerId\", jsonData.user.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"provider@example.com\",\n    \"password\": \"password123\",\n    \"role\": \"PROVIDER\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/signup",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "signup"]
+						}
+					}
+				},
+				{
+					"name": "Login as USER",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Login as PROVIDER",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"provider@example.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Admin Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@localservices.com\",\n    \"password\": \"AdminPassword123!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/admin/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "admin", "login"]
+						}
+					}
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/logout",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "logout"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Get Active Categories (Public)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/categories",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "categories"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin - Categories",
+			"item": [
+				{
+					"name": "Create Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"categoryId\", jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Plumbing\",\n    \"description\": \"Professional plumbing services\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/categories",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "categories"]
+						}
+					}
+				},
+				{
+					"name": "Get All Categories (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/categories",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "categories"]
+						}
+					}
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Plumbing Services\",\n    \"description\": \"Expert plumbing and pipe repair services\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/categories/{{categoryId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "categories", "{{categoryId}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/categories/{{categoryId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "categories", "{{categoryId}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Provider Profile",
+			"item": [
+				{
+					"name": "Create Provider Profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"displayName\": \"John's Plumbing Services\",\n    \"bio\": \"20 years of experience in residential and commercial plumbing\",\n    \"phone\": \"+1-555-0123\",\n    \"location\": {\n        \"city\": \"New York\",\n        \"area\": \"Manhattan\",\n        \"latitude\": 40.7128,\n        \"longitude\": -74.0060\n    },\n    \"additionalContacts\": \"john@plumbing.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/providers/profile",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "providers", "profile"]
+						}
+					}
+				},
+				{
+					"name": "Get My Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/providers/profile/me",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "providers", "profile", "me"]
+						}
+					}
+				},
+				{
+					"name": "Update My Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"displayName\": \"John's Premium Plumbing\",\n    \"bio\": \"25 years of experience in residential and commercial plumbing with 24/7 emergency service\",\n    \"phone\": \"+1-555-0123\",\n    \"location\": {\n        \"city\": \"New York\",\n        \"area\": \"Manhattan\",\n        \"latitude\": 40.7128,\n        \"longitude\": -74.0060\n    },\n    \"additionalContacts\": \"john@plumbing.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/providers/profile/me",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "providers", "profile", "me"]
+						}
+					}
+				},
+				{
+					"name": "Get Provider Profile by ID (Public)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/providers/{{providerId}}/profile",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "providers", "{{providerId}}", "profile"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Service Listings",
+			"item": [
+				{
+					"name": "Get All Listings (Public)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/listings",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "listings"]
+						}
+					}
+				},
+				{
+					"name": "Get Listings by Category (Public)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/listings?categoryId={{categoryId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "listings"],
+							"query": [
+								{
+									"key": "categoryId",
+									"value": "{{categoryId}}"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Listing Details (Public)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/listings/{{listingId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "listings", "{{listingId}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Provider - Listings",
+			"item": [
+				{
+					"name": "Create Service Listing",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"listingId\", jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categoryId\": \"{{categoryId}}\",\n    \"title\": \"Emergency Plumbing Repair\",\n    \"description\": \"24/7 emergency plumbing repair services for leaks, clogs, and broken pipes\",\n    \"price\": 150.00,\n    \"location\": \"Manhattan, New York\",\n    \"estimatedDuration\": 120\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/providers/listings",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "providers", "listings"]
+						}
+					}
+				},
+				{
+					"name": "Get My Listings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/providers/listings",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "providers", "listings"]
+						}
+					}
+				},
+				{
+					"name": "Update Listing",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categoryId\": \"{{categoryId}}\",\n    \"title\": \"24/7 Emergency Plumbing\",\n    \"description\": \"Round-the-clock emergency plumbing services with guaranteed 1-hour response time\",\n    \"price\": 175.00,\n    \"location\": \"Manhattan, New York\",\n    \"estimatedDuration\": 90\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/providers/listings/{{listingId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "providers", "listings", "{{listingId}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete Listing",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/providers/listings/{{listingId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "providers", "listings", "{{listingId}}"]
+						}
+					}
+				},
+				{
+					"name": "Upload Photo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "caption",
+									"value": "Professional plumbing tools",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/providers/listings/{{listingId}}/photos",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "providers", "listings", "{{listingId}}", "photos"]
+						}
+					}
+				},
+				{
+					"name": "Delete Photo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/providers/listings/{{listingId}}/photos/PHOTO_ID",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "providers", "listings", "{{listingId}}", "photos", "PHOTO_ID"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Bookings - User",
+			"item": [
+				{
+					"name": "Create Booking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"bookingId\", jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"serviceListingId\": \"{{listingId}}\",\n    \"scheduledAt\": \"2024-12-15T10:00:00\",\n    \"notes\": \"Urgent: Kitchen sink is leaking\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings"]
+						}
+					}
+				},
+				{
+					"name": "Get My Bookings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/my",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings", "my"]
+						}
+					}
+				},
+				{
+					"name": "Get Booking Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/{{bookingId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings", "{{bookingId}}"]
+						}
+					}
+				},
+				{
+					"name": "Cancel Booking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/{{bookingId}}/cancel?reason=Found another provider",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings", "{{bookingId}}", "cancel"],
+							"query": [
+								{
+									"key": "reason",
+									"value": "Found another provider"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Bookings - Provider",
+			"item": [
+				{
+					"name": "Get Provider Bookings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/provider/bookings",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "provider", "bookings"]
+						}
+					}
+				},
+				{
+					"name": "Get Provider Booking Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/provider/bookings/{{bookingId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "provider", "bookings", "{{bookingId}}"]
+						}
+					}
+				},
+				{
+					"name": "Confirm Booking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/{{bookingId}}/confirm",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings", "{{bookingId}}", "confirm"]
+						}
+					}
+				},
+				{
+					"name": "Complete Booking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/{{bookingId}}/complete",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings", "{{bookingId}}", "complete"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "Create Review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"reviewId\", jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rating\": 5,\n    \"comment\": \"Excellent service! Very professional and fixed the issue quickly.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/{{bookingId}}/reviews",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings", "{{bookingId}}", "reviews"]
+						}
+					}
+				},
+				{
+					"name": "Update Review",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rating\": 5,\n    \"comment\": \"Outstanding service! Very professional, punctual, and fixed the issue quickly. Highly recommended!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/reviews/{{reviewId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "reviews", "{{reviewId}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete Review",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/reviews/{{reviewId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "reviews", "{{reviewId}}"]
+						}
+					}
+				},
+				{
+					"name": "Get Listing Reviews (Public)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/listings/{{listingId}}/reviews",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "listings", "{{listingId}}", "reviews"]
+						}
+					}
+				},
+				{
+					"name": "Get Provider Reviews (Public)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/providers/{{providerId}}/reviews",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "providers", "{{providerId}}", "reviews"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Messages",
+			"item": [
+				{
+					"name": "Send Message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"toUserId\": \"{{providerId}}\",\n    \"bookingId\": \"{{bookingId}}\",\n    \"content\": \"What time can you arrive tomorrow?\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/messages",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "messages"]
+						}
+					}
+				},
+				{
+					"name": "Get Booking Messages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/messages/thread?bookingId={{bookingId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "messages", "thread"],
+							"query": [
+								{
+									"key": "bookingId",
+									"value": "{{bookingId}}"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get My Conversations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/messages/conversations",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "messages", "conversations"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin - Users",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "users"]
+						}
+					}
+				},
+				{
+					"name": "Get Users by Role",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users?role=PROVIDER",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "users"],
+							"query": [
+								{
+									"key": "role",
+									"value": "PROVIDER"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users/{{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "users", "{{userId}}"]
+						}
+					}
+				},
+				{
+					"name": "Update User Status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users/{{userId}}/status?isActive=false",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "users", "{{userId}}", "status"],
+							"query": [
+								{
+									"key": "isActive",
+									"value": "false"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Dashboard Stats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/dashboard",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "dashboard"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin - Listings",
+			"item": [
+				{
+					"name": "Get All Listings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/listings",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "listings"]
+						}
+					}
+				},
+				{
+					"name": "Update Listing Status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/listings/{{listingId}}/status?isActive=false",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "listings", "{{listingId}}", "status"],
+							"query": [
+								{
+									"key": "isActive",
+									"value": "false"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin - Bookings",
+			"item": [
+				{
+					"name": "Get All Bookings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/bookings",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "bookings"]
+						}
+					}
+				},
+				{
+					"name": "Get Bookings by Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/bookings?status=PENDING",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "bookings"],
+							"query": [
+								{
+									"key": "status",
+									"value": "PENDING"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Admin Cancel Booking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/bookings/{{bookingId}}/cancel?reason=Policy violation",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "bookings", "{{bookingId}}", "cancel"],
+							"query": [
+								{
+									"key": "reason",
+									"value": "Policy violation"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin - Reviews",
+			"item": [
+				{
+					"name": "Get All Reviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/reviews",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "reviews"]
+						}
+					}
+				},
+				{
+					"name": "Delete Review (Admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/reviews/{{reviewId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "reviews", "{{reviewId}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin - Messages",
+			"item": [
+				{
+					"name": "Get All Messages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/messages",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "messages"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Notifications",
+			"item": [
+				{
+					"name": "Get My Notifications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/notifications?page=0&size=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "notifications"],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "20"
+								},
+								{
+									"key": "isRead",
+									"value": "false",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get notifications for current logged-in user. Optional query params: isRead (boolean), page, size"
+					}
+				},
+				{
+					"name": "Get Unread Notifications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/notifications?isRead=false",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "notifications"],
+							"query": [
+								{
+									"key": "isRead",
+									"value": "false"
+								}
+							]
+						},
+						"description": "Get only unread notifications for current user"
+					}
+				},
+				{
+					"name": "Mark Notification as Read",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Replace with actual notification ID",
+									"pm.variables.set(\"notificationId\", \"REPLACE_WITH_NOTIFICATION_ID\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/notifications/{{notificationId}}/read",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "notifications", "{{notificationId}}", "read"]
+						},
+						"description": "Mark a single notification as read. Ensure the current user is the owner of the notification."
+					}
+				},
+				{
+					"name": "Mark All Notifications as Read",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/notifications/read-all",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "notifications", "read-all"]
+						},
+						"description": "Mark all notifications as read for the current user"
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin - Notifications",
+			"item": [
+				{
+					"name": "Send Notification to All Users",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"targetType\": \"ALL_USERS\",\n  \"title\": \"System Announcement\",\n  \"message\": \"Platform maintenance scheduled for tonight at 12 AM.\",\n  \"type\": \"ADMIN_ANNOUNCEMENT\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/notifications/admin",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "notifications", "admin"]
+						},
+						"description": "Admin sends notification to all users. Requires ADMIN role and admin login cookie."
+					}
+				},
+				{
+					"name": "Send Notification to All Providers",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"targetType\": \"ALL_PROVIDERS\",\n  \"title\": \"Important Update\",\n  \"message\": \"New features available for service providers. Check your dashboard.\",\n  \"type\": \"ADMIN_ANNOUNCEMENT\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/notifications/admin",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "notifications", "admin"]
+						},
+						"description": "Admin sends notification to all providers. Requires ADMIN role."
+					}
+				},
+				{
+					"name": "Send Notification to Specific User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"targetType\": \"USER\",\n  \"targetUserId\": \"{{userId}}\",\n  \"title\": \"Account Notice\",\n  \"message\": \"Your account has been verified.\",\n  \"type\": \"ADMIN_ANNOUNCEMENT\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/notifications/admin",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "notifications", "admin"]
+						},
+						"description": "Admin sends notification to a specific user. targetUserId is required when targetType is USER or PROVIDER."
+					}
+				},
+				{
+					"name": "Send Notification to All",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"targetType\": \"ALL\",\n  \"title\": \"Platform Update\",\n  \"message\": \"We have updated our terms of service. Please review.\",\n  \"type\": \"ADMIN_ANNOUNCEMENT\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/notifications/admin",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "notifications", "admin"]
+						},
+						"description": "Admin sends notification to all platform users (USER, PROVIDER, ADMIN). Requires ADMIN role."
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin - Analytics",
+			"item": [
+				{
+					"name": "Get Summary Metrics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/analytics/summary",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "analytics", "summary"]
+						},
+						"description": "Get overall platform summary metrics including total users, providers, active listings, bookings, and average rating. Requires ADMIN role."
+					}
+				},
+				{
+					"name": "Get Bookings Over Time",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/analytics/bookings-over-time?days=30",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "analytics", "bookings-over-time"],
+							"query": [
+								{
+									"key": "days",
+									"value": "30",
+									"description": "Number of days to look back (default: 30)"
+								}
+							]
+						},
+						"description": "Get bookings grouped by day for the last N days. Requires ADMIN role."
+					}
+				},
+				{
+					"name": "Get Bookings Over Time (7 days)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/analytics/bookings-over-time?days=7",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "analytics", "bookings-over-time"],
+							"query": [
+								{
+									"key": "days",
+									"value": "7"
+								}
+							]
+						},
+						"description": "Get bookings for the last 7 days"
+					}
+				},
+				{
+					"name": "Get Top Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/analytics/top-categories?limit=5",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "analytics", "top-categories"],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5",
+									"description": "Number of top categories to return (default: 5)"
+								}
+							]
+						},
+						"description": "Get top categories by booking count. Requires ADMIN role."
+					}
+				},
+				{
+					"name": "Get Top Categories (Top 10)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/analytics/top-categories?limit=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "analytics", "top-categories"],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get top 10 categories by booking count"
+					}
+				},
+				{
+					"name": "Get Top Providers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/analytics/top-providers?limit=5",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "analytics", "top-providers"],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5",
+									"description": "Number of top providers to return (default: 5)"
+								}
+							]
+						},
+						"description": "Get top providers by completed bookings and average rating. Requires ADMIN role."
+					}
+				},
+				{
+					"name": "Get Top Providers (Top 10)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/analytics/top-providers?limit=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "analytics", "top-providers"],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get top 10 providers by completed bookings and average rating"
+					}
+				}
+			]
+		}
+	]
+}
